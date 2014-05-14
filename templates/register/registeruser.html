@@ -1,0 +1,184 @@
+{% extends "static/base.html" %}
+{% load bootstrap3 %}
+{% load register_extras %}
+{% block title %} User Registration {% endblock %}
+{% block header_title %}
+<h2><i class="fa fa-user"></i>
+    Amritamgamaya Registration</h2>
+{% endblock header_title %}
+{% block script %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+{{ user_form.media }}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#registerForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+                name : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The Name must be more than 1 and less than 30 characters long'
+                        },
+                    
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_ ]+$/,
+                            message: 'The Name can only consist of alphabetical, number and underscore'
+                        }
+                    },
+                },
+                address_line_one : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The address must be more than 1 and less than 30 characters long'
+                        },
+                    }
+                }, 
+                state : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The state must be more than 1 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_ ]+$/,
+                            message: 'The Name can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }, 
+                city : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The city must be more than 1 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_ ]+$/,
+                            message: 'The Name can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }, 
+                pincode : {
+                    validators: {
+                        between: {
+                            min: 100000,
+                            max: 999999,
+                            message: 'The pincode range is between 10000 and 99999'
+                        }
+                    }
+                },
+                contact_no: {
+                    validators: {
+                        phone: {
+                            country: 'IN',
+                            message: 'The phone number is invalid'
+                        }
+                    }
+                },
+                department : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The department must be more than 1 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_ ]+$/,
+                            message: 'The department can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }, 
+                position : {
+                    validators : {
+                        stringLength: {
+                            min: 1,
+                            max: 50,
+                            message: 'The position must be more than 1 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_ ]+$/,
+                            message: 'The position can only consist of alphabetical, number and underscore'
+                        }
+                    }
+                }, 
+                email : {
+                    validators : {
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }, 
+                    }
+                },
+        }
+    });
+});
+</script>
+{% endblock script %}
+{% block body %}
+<div class="page-header">
+    <h1>User Details</h1>
+</div><!--page-header-->
+<form method="post" id="registerForm" role="form">
+    {% csrf_token %}
+    <div class="form-signin-2 row">
+        <legend>Enter user details</legend>
+        {% for field in user_form.visible_fields %}
+        <div id="div_{{ field.html_name }}">
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                {% if field.name == "contact_no" %}
+                <div class="input-group">
+                    <span class="input-group-addon">+91</span>
+                    {{ field|addcss:"form-control" }}
+                </div><!--input-group-->
+                {% else %}
+                {{ field|addcss:"form-control" }}
+                {% endif %}
+                <div class="text-muted pull-right">
+                    <small>{{ field.help_text }}</small>
+                </div><!--form-group-->
+                <span class="help-block">
+                    {% for error in field.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </span><!--help-block-->
+            </div><!--form-group-->
+        </div><!--div_{{field.html_name}}-->
+        {% endfor %}
+        {% for hidden in user_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+    </div><!--form-register-->
+    <div class="row">
+        <div class="col-md-4 col-centered">
+            <div class="form-group">
+                <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY"></script>
+                <noscript>
+                    <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY" height="300" width="500" frameborder="0"></iframe><br/>
+                    <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                    <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+                </noscript>
+                {% ifequal captcha 'false' %}
+                <div class="error-msg has-error">
+                    Incorrect Captcha
+                </div><!--error-msg has-error-->
+                {% endifequal %}
+            </div><!--form-group-->
+        </div><!--col-md-4 col-centered-->
+    </div><!--row-->
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+        </div><!--col-md-4-->
+        <div class="col-md-4"></div>
+    </div><!--row-->
+</form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "static/atom.html" %}
+<!-- HEADER -->
+{% block header %}
+<div id="masthead">  
+    <div class="container">
+        <div class="row">
+                {% block header_title %}
+                    {% include "static/header.html" %}
+                {% endblock header_title %}
+        </div> <!--row-->
+    </div><!-- container -->
+</div><!--masthead-->
+{% endblock header %}
+<!-- END OF HEADER -->
+{% block content %}
+<div id="content-col" class="container">
+    {% block body %} {% endblock %}
+</div><!-- container-->
+<div class="push"></div>
+{% endblock content %}

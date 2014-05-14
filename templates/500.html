@@ -1,0 +1,21 @@
+{% extends "static/base.html" %}
+
+{% block title %}Oops!{% endblock %}
+{% block header_title %}
+<h2><i class="fa fa-frown-o"></i>
+    Oops!</h2>
+{% endblock header_title %}
+{% block body %}
+<div class="page-header">
+    <h1> Oh, Crap! </h1>
+</div><!--page-header-->
+<div class="row">
+    <div class="col-md-8">
+        <div class="alert alert-info">
+            <p> There seems to be a server error! Please contact the InCTF team at 
+            <a href="mailto:contact@inctf.in?subject=[Found_a_bug_in_InCTF_Portal]" target="_blank">contact@inctf.in</a>
+            with a description of what you were doing, what happened and what should have happend. Thanks!</p>
+        </div><!--alert alert-info-->
+    </div><!--col-md-8-->
+</div><!--row-->
+{% endblock %}

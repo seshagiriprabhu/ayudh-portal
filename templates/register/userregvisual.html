@@ -1,0 +1,48 @@
+{% extends "static/base.html" %}
+{% load register_extras %}
+{% block title %} Amritamgamaya {% endblock %}
+{% block header_title %}
+<h2><i class="fa fa-dashboard"></i> Registered Users</h2>
+{% endblock header_title %}
+{% block body %}
+<br>
+{% if user_list %}
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center"><strong>Amritamgamaya Registration</strong></div>
+        <div vlass="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Sl.No</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for key, value in user_list.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value.0 }}</td>
+                    <td>{{ value.1 }}</td>
+                    <td>{{ value.2 }}</td>
+                    <td>{{ value.3 }}</td>
+                    <td>{{ value.4 }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table><!--table-->
+        </div><!--table-responsive-->
+    </div><!--panel-->
+</div><!--row-->
+{% else %}
+<div class="row">
+    <div class="alert alert-info">
+        <i class="fa fa-info-circle"></i> No data to display
+    </div>
+</div>
+{% endif %}
+{% endblock body %}
