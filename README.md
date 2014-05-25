@@ -8,8 +8,28 @@
 4. Install app requirements: `Django`, `Bootstrap` etc
     ```bash
     sudo apt-get install python-pip
+    ```
+    ```bash
     sudo pip install -r requirements
     ```
+#Development
+if you are planning to develop this application, I would highly suggest you
+to run it on a python virtual environment. Before the step [4], you could 
+install `virtualenvwrapper`
+
+1.  `virtualenvwrapper`
+    ```bash
+    sudo pip install virtualenvwrapper
+    ```
+2. Make a virtual environment
+    ```bash
+    mkvirutalenv ayudh
+    ```
+3. If you want to workon the same virtualenv
+    ```bash
+    workon ayudh
+    ```
+
 #Possible Issues
 1. Invalid command `WSGIScriptAlias`, perhaps misspelled or defined by a 
 module not included in the server configuration. This is because WSGI 
