@@ -29,7 +29,23 @@ install `virtualenvwrapper`
     ```bash
     workon ayudh
     ```
-
+4. Setup database: In development mode we use sqlite3 db. We need to 
+create a folder named 'db' in-order to store the db file.
+    ```bash
+    mkdir db
+    ```
+5. Set up the tables in database
+    ```bash
+    python manage.py syncdb
+    ```
+6. Collect static pages
+    ```bash
+    python manage.py collectstatic
+    ```
+7. Run the server
+    ```bash
+    python manage.py runserver
+    ```
 #Possible Issues
 1. Invalid command `WSGIScriptAlias`, perhaps misspelled or defined by a 
 module not included in the server configuration. This is because WSGI 
