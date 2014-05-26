@@ -12,12 +12,13 @@
     ```bash
     sudo pip install -r requirements
     ```
+
 #Development
 if you are planning to develop this application, I would highly suggest you
 to run it on a python virtual environment. Before the step [4], you could 
 install `virtualenvwrapper`
 
-1.  `virtualenvwrapper`
+1.  virtualenvwrapper
     ```bash
     sudo pip install virtualenvwrapper
     ```
@@ -46,6 +47,7 @@ create a folder named 'db' in-order to store the db file.
     ```bash
     python manage.py runserver
     ```
+
 #Possible Issues
 1. Invalid command `WSGIScriptAlias`, perhaps misspelled or defined by a 
 module not included in the server configuration. This is because WSGI 
