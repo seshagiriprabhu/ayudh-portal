@@ -6,9 +6,11 @@
     sudo apt-get install apache2 mysql-server-5.5 libapache2-mod-wsgi
     ```
 4. Install app requirements: `Django`, `Bootstrap` etc
+
     ```bash
     sudo apt-get install python-pip
     ```
+
     ```bash
     sudo pip install -r requirements
     ```
@@ -19,31 +21,44 @@ to run it on a python virtual environment. Before the step [4], you could
 install `virtualenvwrapper`
 
 1.  virtualenvwrapper
+
     ```bash
     sudo pip install virtualenvwrapper
     ```
+
 2. Make a virtual environment
+
     ```bash
     mkvirutalenv ayudh
     ```
+
 3. If you want to workon the same virtualenv
+
     ```bash
     workon ayudh
     ```
+
 4. Setup database: In development mode we use sqlite3 db. We need to 
 create a folder named 'db' in-order to store the db file.
+
     ```bash
     mkdir db
     ```
+
 5. Set up the tables in database
+
     ```bash
     python manage.py syncdb
     ```
+
 6. Collect static pages
+
     ```bash
     python manage.py collectstatic
     ```
+
 7. Run the server
+
     ```bash
     python manage.py runserver
     ```
