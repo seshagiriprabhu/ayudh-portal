@@ -2,9 +2,11 @@
 1. Clone the repository and copy it to /var/www/.
 2. Create `local_settings.py` in `ayudh` folder and set values as required.
 3. Install `apache2`, `mysql-server` and `libapache2-mod-wsgi`.
+
     ```bash
     sudo apt-get install apache2 mysql-server-5.5 libapache2-mod-wsgi
     ```
+
 4. Install app requirements: `Django`, `Bootstrap` etc
 
     ```bash
