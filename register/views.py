@@ -10,7 +10,7 @@ from django.core.context_processors import csrf
 from django.views.csrf import csrf_failure
 from django.utils import simplejson
 
-from register.models import User
+from register.models import User, Login
 from register.forms import *
 from register.helper import *
 from register.lists import LIST_OF_STATES as statelist
@@ -46,45 +46,49 @@ def registeruser(request):
             raise Http404() 
         context_instance=RequestContext(request)
         if request.method == 'POST':
-            user_form = UserForm(request.POST)
+            login_form = LoginForm(request.POST)        
             recaptcha_challenge_field = request.POST['recaptcha_challenge_field']
             recaptcha_response_field = request.POST['recaptcha_response_field']
             recaptcha_remote_ip = ""
             captcha_is_correct = check_captcha(recaptcha_challenge_field, 
                                                 recaptcha_response_field,
                                                 recaptcha_remote_ip)
-            user_is_valid = user_form.is_valid()
+            login_is_valid = login_form.is_valid()
         
-            if user_is_valid and captcha_is_correct:
-                cleaned_user_data = user_form.cleaned_data
-                cleaned_username = cleaned_user_data['name']
-                cleaned_email = cleaned_user_data['email']
-                user_form.save()
-            
-                sendmail_after_userreg(cleaned_username, cleaned_username, cleaned_email)
+            if login_is_valid and captcha_is_correct:
+                cleaned_login_data = login_form.cleaned_data
+                cleaned_username = cleaned_login_data['username']
+                cleaned_password = cleaned_login_data['password']
+                cleaned_email = cleaned_login_data['email']
+
+                login_instance = Login(cleaned_username, cleaned_password, cleaned_email)
+
+                login_instance.save()
+
+                sendmail_after_userreg(cleaned_username, cleaned_login_data['password'], cleaned_email)
                 notify_new_user(cleaned_username)
                 return HttpResponseRedirect('/register/user/success/')
 
             else:
                 captcha = 'true'
-                if not captcha_is_correct and user_is_valid:
+                if not captcha_is_correct:
                     captcha = 'false'
                 return render_to_response('register/registeruser.html',
-                                            {'user_form':user_form,
+                                            {'login_form':login_form,
                                             'page':'register',
                                             'captcha':captcha},
                                         RequestContext(request))
     
         return render_to_response('register/registeruser.html', 
-                                                    {'user_form' : UserForm(),
-                                                        'page':'register'},
-                                                        RequestContext(request))
+                                                    {'login_form' : LoginForm(),
+                                                    'page':'register'},
+                                                    RequestContext(request))
     except KeyError:
         return error_key(request)
 
 def userregistrationsuccess(request):
-        #Prevent CSRF Attacks
-        return render_to_response('register/successful.html',{},RequestContext(request))
+    #Prevent CSRF Attacks
+    return render_to_response('register/successful.html',{},RequestContext(request))
 
 def visualreg(request):
     users = User.objects.all()

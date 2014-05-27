@@ -2,14 +2,18 @@ from django.forms import ModelForm
 from bootstrap3_datetime.widgets import DateTimePicker
 from django import forms
 from django.db import models
+from django.forms.fields import DateField, ChoiceField, MultipleChoiceField
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 import re
 #from django.core import Validator
 from django.shortcuts import get_object_or_404
-from register.models import User
+from register.models import User, Login
 from register.lists import LIST_OF_STATES 
 from register.helper import *
 
 GENDER_CHOICES = (('M', 'Male'),('F','Female'))
+INTEREST_CHOICES = (('Poetry', 'Poetry'), ('Seminar', 'Seminar'))
+SKILLS_CHOICES = (('Writing', 'Writing'), ('Web Design', 'Web Design'))
 
 #Custom Functions
 def check_alpha(name):
@@ -44,30 +48,14 @@ class UserForm(ModelForm):
     )
 
     gender=forms.ChoiceField(
-        required=False,
+        required=True,
         label='Gender', 
         choices=GENDER_CHOICES, 
-        widget=forms.Select()
-    )
-
-    address_line_one=forms.CharField(
-        required=True,
-        label='Address Line One', 
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Address Line One'}
-        )
-    )
-
-    address_line_two=forms.CharField(
-        required=False,
-        label='Address Line Two', 
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Address Line Two',}
-        )
+        widget=forms.RadioSelect()
     )
 
     state=forms.CharField(
-        required=False,
+        required=True,
         label='State', 
         widget=forms.Select(
             choices=LIST_OF_STATES,    
@@ -76,18 +64,10 @@ class UserForm(ModelForm):
     )
 
     city=forms.CharField(
-        required=False,
+        required=True,
         label='City', 
         widget=forms.TextInput(
             attrs={'placeholder': 'City'}
-        )
-    )
-
-    pincode=forms.IntegerField(
-        required=False,
-        label='Pincode', 
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Pincode'}
         )
     )
 
@@ -107,11 +87,52 @@ class UserForm(ModelForm):
         )
     )
     
-    position=forms.CharField(
+    email=forms.EmailField(
         required=True,
-        label='Position', 
+        label='Email', 
         widget=forms.TextInput(
-            attrs={'placeholder': 'Position'}
+            attrs={'placeholder': 'Email Address'}
+        )
+    )
+
+    interest=forms.MultipleChoiceField(
+        required=True,
+        label='Interests', 
+        choices=INTEREST_CHOICES, 
+        widget=forms.CheckboxSelectMultiple(
+            attrs={'placeholder': 'Interests'}
+        )
+    )
+
+    skills=forms.MultipleChoiceField(
+        required=True,
+        label='Skills', 
+        choices=SKILLS_CHOICES, 
+        widget=forms.CheckboxSelectMultiple(
+            attrs={'placeholder': 'Skills'}
+        )
+    )
+
+    class Meta:
+        model = User
+        widgets = {'user_id':forms.HiddenInput()}
+        exclude = ('usermode')
+        usermode = 'Member'
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if check_alpha(name):
+            return name
+        else:
+            raise forms.ValidationError("Please enter only alphabets")
+
+class LoginForm(ModelForm):
+
+    username = forms.CharField(
+        required = True,
+        label = 'Username',
+        widget = forms.TextInput(
+            attrs={'placeholder' : 'Username'}
         )
     )
 
@@ -123,22 +144,35 @@ class UserForm(ModelForm):
         )
     )
 
+    password=forms.CharField(
+        required=True,
+        max_length=100,
+        label='Password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Password'}
+        )
+    )
+
+    repass = forms.CharField(
+        max_length=100,
+        required=True,
+        label='Re-enter password',
+        widget=forms.PasswordInput(
+            attrs={'placeholder': 'Re Enter Your Password'}
+        ),
+    )
+
+
     class Meta:
-        model = User
-        widgets = {'user_id':forms.HiddenInput()}
+        model = Login
+        widgets = {'password':forms.PasswordInput(),'email':forms.HiddenInput()}
+        exclude = ('date_of_regn',)    
 
-    def clean_name(self):
-        name = self.cleaned_data['name']
-        if check_alpha(name):
-            return name
+    def clean_repass(self):
+        password = self.cleaned_data['password']
+        re_password = self.cleaned_data['repass']
+        if password == re_password:
+            return password
         else:
-            raise forms.ValidationError("Please enter only alphabets")
-
-    def clean_pincode(self):
-        pincode = self.cleaned_data['pincode']
-        if pincode >110000 and pincode < 930000:
-            return pincode
-        else:
-            raise forms.ValidationError("Please Enter a valid Pincode")
-    
+            raise forms.ValidationError("Passwords don't match")
 

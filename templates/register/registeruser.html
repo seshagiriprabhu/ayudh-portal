@@ -4,121 +4,82 @@
 {% block title %} User Registration {% endblock %}
 {% block header_title %}
 <h2><i class="fa fa-user"></i>
-    Amritamgamaya Registration</h2>
+    Ayudh Member Registration</h2>
 {% endblock header_title %}
 {% block script %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 {{ user_form.media }}
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#registerForm').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-                name : {
+    $('#registerForm')
+        .bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username : {
                     validators : {
-                        stringLength: {
-                            min: 1,
-                            max: 50,
-                            message: 'The Name must be more than 1 and less than 30 characters long'
+                        notEmpty: {
+                            message: 'The username cannot be empty'  
                         },
-                    
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_ ]+$/,
-                            message: 'The Name can only consist of alphabetical, number and underscore'
-                        }
-                    },
-                },
-                address_line_one : {
-                    validators : {
                         stringLength: {
-                            min: 1,
+                            min: 4,
                             max: 50,
-                            message: 'The address must be more than 1 and less than 30 characters long'
-                        },
-                    }
-                }, 
-                state : {
-                    validators : {
-                        stringLength: {
-                            min: 1,
-                            max: 50,
-                            message: 'The state must be more than 1 and less than 30 characters long'
+                            message: 'The username must be more than 4 and less than 50 characters long'
                         },
                         regexp: {
-                            regexp: /^[a-zA-Z0-9_ ]+$/,
-                            message: 'The Name can only consist of alphabetical, number and underscore'
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: 'The username can only consist of alphabetical, number and underscore'
                         }
                     }
                 }, 
-                city : {
-                    validators : {
-                        stringLength: {
-                            min: 1,
-                            max: 50,
-                            message: 'The city must be more than 1 and less than 30 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_ ]+$/,
-                            message: 'The Name can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                }, 
-                pincode : {
+                password: {
                     validators: {
-                        between: {
-                            min: 100000,
-                            max: 999999,
-                            message: 'The pincode range is between 10000 and 99999'
+                        notEmpty: {
+                            message: 'The password cannot be empty'  
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 32,
+                            message: 'The password length must be in b/n 6 and 32 characters long.\nIt should have at least a small, capital and a special character'
+                        },
+                        regexp: {
+                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
+                        },
+                        identical: {
+                            field: 'repass',
+                            message: 'The password and the confirm password doesn\'t match'
                         }
                     }
                 },
-                contact_no: {
+                repass: {
                     validators: {
-                        phone: {
-                            country: 'IN',
-                            message: 'The phone number is invalid'
+                        notEmpty: {
+                            message: 'The confirm password cannot be empty'  
+                        },  
+                        regexp: {
+                            regexp: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,32}$/
+                        },
+                        identical: {
+                            field: 'password',
+                            message: 'The password and the confirm password doesn\'t match'
                         }
                     }
                 },
-                department : {
-                    validators : {
-                        stringLength: {
-                            min: 1,
-                            max: 50,
-                            message: 'The department must be more than 1 and less than 30 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_ ]+$/,
-                            message: 'The department can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                }, 
-                position : {
-                    validators : {
-                        stringLength: {
-                            min: 1,
-                            max: 50,
-                            message: 'The position must be more than 1 and less than 30 characters long'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_ ]+$/,
-                            message: 'The position can only consist of alphabetical, number and underscore'
-                        }
-                    }
-                }, 
                 email : {
                     validators : {
+                        notEmpty: {
+                            message: 'Email cannot be empty'  
+                        },
                         emailAddress: {
                             message: 'The input is not a valid email address'
                         }, 
                     }
-                },
-        }
-    });
+                }
+            }
+        });
 });
 </script>
 {% endblock script %}
@@ -128,14 +89,29 @@ $(document).ready(function() {
 </div><!--page-header-->
 <form method="post" id="registerForm" role="form">
     {% csrf_token %}
-    <div class="form-signin-2 row">
-        <legend>Enter user details</legend>
-        {% for field in user_form.visible_fields %}
+    <div class="form-signin-2">
+        <legend>Enter login details</legend>
+        {% for field in login_form.visible_fields %}
         <div id="div_{{ field.html_name }}">
             <div class="form-group{% if field.errors %} has-error{% endif %}">
-                {% if field.name == "contact_no" %}
+                {% if field.name == "username" %}
                 <div class="input-group">
-                    <span class="input-group-addon">+91</span>
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {{ field|addcss:"form-control" }}
+                </div><!--input-group-->
+                {% elif field.name == "password" %}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    {{ field|addcss:"form-control" }}
+                </div><!--input-group-->
+                {% elif field.name == "repass" %}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    {{ field|addcss:"form-control" }}
+                </div><!--input-group-->
+                {% elif field.name == "email" %}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                     {{ field|addcss:"form-control" }}
                 </div><!--input-group-->
                 {% else %}
@@ -152,33 +128,23 @@ $(document).ready(function() {
             </div><!--form-group-->
         </div><!--div_{{field.html_name}}-->
         {% endfor %}
-        {% for hidden in user_form.hidden_fields %}
+        {% for hidden in login_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
-    </div><!--form-register-->
-    <div class="row">
-        <div class="col-md-4 col-centered">
-            <div class="form-group">
-                <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY"></script>
-                <noscript>
-                    <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY" height="300" width="500" frameborder="0"></iframe><br/>
-                    <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-                    <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
-                </noscript>
-                {% ifequal captcha 'false' %}
-                <div class="error-msg has-error">
-                    Incorrect Captcha
-                </div><!--error-msg has-error-->
-                {% endifequal %}
-            </div><!--form-group-->
-        </div><!--col-md-4 col-centered-->
-    </div><!--row-->
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
-        </div><!--col-md-4-->
-        <div class="col-md-4"></div>
-    </div><!--row-->
+        <div class="form-group">
+            <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY"></script>
+            <noscript>
+                <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LdQssASAAAAAOX2cektnQ1DDSMQimXwczbEQbdY" height="300" width="500" frameborder="0"></iframe><br/>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+            </noscript>
+            {% ifequal captcha 'false' %}
+            <div class="alert alert-danger">
+                Incorrect Captcha
+            </div><!--error-msg has-error-->
+            {% endifequal %}
+        </div><!--form-group-->
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </div><!--form-signin-2-->
 </form>
-{% endblock %}
+{% endblock body %}
