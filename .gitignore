@@ -68,3 +68,5 @@ docs/_build/
 *.pot
 *.pyc
 local_settings.py
+static/
+db/
