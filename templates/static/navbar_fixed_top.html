@@ -12,8 +12,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li>
-                <a href="/about"><i class="fa fa-info-circle"></i> About</a></li>
+                <li class="{% ifequal request.path '/about/' %}active{% endifequal %}">
+                <a href="/about"><i class="fa fa-info-circle"></i> About</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -37,11 +38,27 @@
                 </a>
                 </li>
                 {% ifequal request.session.loggedinside True %}
-                <li><a href="/logout"><i class="fa fa-power-off fa-sign-out"></i> Logout</a></li>
+                <li class="dropdown">
+                <a href="/event" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-trophy"></i> Events<b class="caret"></b></a>
+                </li>
+                <ul class="dropdown-menu">
+                    <li><a href="/event/create"><i class="fa fa-plus-circle"></i> Create Event</a></li>
+                    <li><a href="/event/delete"><i class="fa fa-minus-circle"></i> Remove Event</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/event/list"><i class="fa fa-list-alt"></i> List Events</a></li>
+                </ul>
+                <li class="{% ifequal request.path '/logout' %}active{% endifequal %}"><a href="/logout">
+                    <i class="fa fa-power-off fa-sign-out"></i> Logout</a>
+                </li>
                 <!--<li><a href="/login"><i class="fa fa-sign-in fa-fw"></i>Login</a></li>-->
                 {% else %}
-                <li><a href="/login"><i class="fa fa-user fa-sign-in"></i> Sign in</a></li>
-                <li><a href="/register/user"><i class="fa fa-user fa-fw"></i>Sign up</a></li>
+                <li class="{% ifequal request.path '/login/' %}active{% endifequal %}">
+                <a href="/login" >
+                    <i class="fa fa-user fa-sign-in"></i> Sign in
+                </a>
+                </li>
+                <li class="{% ifequal request.path '/register/user/' %}active{% endifequal %}">
+                <a href="/register/user"><i class="fa fa-user fa-fw"></i>Sign up</a></li>
                 {% endifequal %}
             </ul>
         </div><!--collapse-->
