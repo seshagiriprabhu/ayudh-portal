@@ -1,54 +1,49 @@
 <!-- NAVBAR
 ================================================== -->
-<div class="navbar-sm">
-    <div class="navbar-primary">
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                        <i class="icon-bar"></i>
-                        <i class="icon-bar"></i>
-                    </button>
-                    <a class="navbar-brand" href="/"><i class="fa fa-twitter"></i> Ayudh</a>
-                </div><!--navbar-header-->
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        { if}
-                        <li>
-                        <a href="/about"><i class="fa fa-info-circle"></i> About</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                        <a class="link-footer" href="http://www.ayudh.in" target="_website">
-                            <i class="fa fa-home"></i>
-                        </a>
-                        </li>
-                        <li>
-                        <a class="link-footer" href="http://www.facebook.com/AmritapuriAYUDH" target="_facebook">
-                            <i class="fa fa-facebook"></i>
-                        </a>
-                        </li>
-                        <li>
-                        <a class="link-footer" href="http://www.twitter.com/AmritapuriAYUDH" target="_twitter">
-                            <i class="fa fa-twitter"></i>
-                        </a>
-                        </li>
-                        <li>
-                        <a class="link-footer" href="http://www.youtube.com/AmritapuriAYUDH" target="_youtube">
-                            <i class="fa fa-youtube"></i>
-                        </a>
-                        </li>
-                        {% ifequal request.session.loggedinside True %}
-                         <li><a href="/logout"><i class="fa fa-power-off fa-fw"></i>Logout</a></li>
-                        <!--<li><a href="/login"><i class="fa fa-sign-in fa-fw"></i>Login</a></li>-->
-                        {% else %}
-                        <li><a href="/login"><i class="fa fa-user fa-fw"></i>Sign in</a></li>
-                        <li><a href="/register/user"><i class="fa fa-user fa-fw"></i>Sign up</a></li>
-                        {% endifequal %}
-                    </ul>
-                </div><!--collapse-->
-            </div><!--container-->
-        </nav> <!-- navbar navbar-inverse -->
-    </div> <!--navbar-primary-->
-</div> <!--navbar-sm -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <i class="icon-bar"></i>
+                <i class="icon-bar"></i>
+            </button>
+            <a class="navbar-brand" href="/"><i class="fa fa-twitter"></i> Ayudh</a>
+        </div><!--navbar-header-->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                <a href="/about"><i class="fa fa-info-circle"></i> About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                <a class="link-footer" href="http://www.ayudh.in" target="_website">
+                    <i class="fa fa-home"></i>
+                </a>
+                </li>
+                <li>
+                <a class="link-footer" href="http://www.facebook.com/AmritapuriAYUDH" target="_facebook">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                </li>
+                <li>
+                <a class="link-footer" href="http://www.twitter.com/AmritapuriAYUDH" target="_twitter">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                </li>
+                <li>
+                <a class="link-footer" href="http://www.youtube.com/AmritapuriAYUDH" target="_youtube">
+                    <i class="fa fa-youtube"></i>
+                </a>
+                </li>
+                {% ifequal request.session.loggedinside True %}
+                <li><a href="/logout"><i class="fa fa-power-off fa-fw"></i>Logout</a></li>
+                <!--<li><a href="/login"><i class="fa fa-sign-in fa-fw"></i>Login</a></li>-->
+                {% else %}
+                <li><a href="/login"><i class="fa fa-user fa-fw"></i>Sign in</a></li>
+                <li><a href="/register/user"><i class="fa fa-user fa-fw"></i>Sign up</a></li>
+                {% endifequal %}
+            </ul>
+        </div><!--collapse-->
+    </div><!--container-->
+</nav> <!-- navbar navbar-inverse -->
