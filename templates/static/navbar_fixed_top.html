@@ -37,10 +37,10 @@
                 </a>
                 </li>
                 {% ifequal request.session.loggedinside True %}
-                <li><a href="/logout"><i class="fa fa-power-off fa-fw"></i>Logout</a></li>
+                <li><a href="/logout"><i class="fa fa-power-off fa-sign-out"></i> Logout</a></li>
                 <!--<li><a href="/login"><i class="fa fa-sign-in fa-fw"></i>Login</a></li>-->
                 {% else %}
-                <li><a href="/login"><i class="fa fa-user fa-fw"></i>Sign in</a></li>
+                <li><a href="/login"><i class="fa fa-user fa-sign-in"></i> Sign in</a></li>
                 <li><a href="/register/user"><i class="fa fa-user fa-fw"></i>Sign up</a></li>
                 {% endifequal %}
             </ul>
