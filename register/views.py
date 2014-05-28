@@ -33,12 +33,12 @@ def logged_in(request):
     except KeyError:
         return False
     
-def viewtemplate(request):
-    return render_to_response('general/index.html',RequestContext(request))
-
 def register(request):
     return render_to_response('register/register.html',RequestContext(request))
 #    return render_to_response('register/registerclosed.html',RequestContext(request))
+
+def viewtemplate(request):
+    return render_to_response('general/index.html',RequestContext(request))
 
 def registeruser(request):
     try:
@@ -57,16 +57,14 @@ def registeruser(request):
         
             if login_is_valid and captcha_is_correct:
                 cleaned_login_data = login_form.cleaned_data
-                cleaned_username = cleaned_login_data['username']
-                cleaned_password = cleaned_login_data['password']
+                cleaned_password = hash_func(cleaned_login_data['password']).hexdigest()
                 cleaned_email = cleaned_login_data['email']
 
-                login_instance = Login(cleaned_username, cleaned_password, cleaned_email)
-
+                login_instance = Login(cleaned_email, cleaned_password)
                 login_instance.save()
 
-                sendmail_after_userreg(cleaned_username, cleaned_login_data['password'], cleaned_email)
-                notify_new_user(cleaned_username)
+                sendmail_after_userreg(cleaned_email, cleaned_login_data['password'])
+                notify_new_user(cleaned_email)
                 return HttpResponseRedirect('/register/user/success/')
 
             else:

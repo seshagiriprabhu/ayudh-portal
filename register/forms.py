@@ -22,8 +22,8 @@ def check_alpha(name):
     else:
         return False
 
-def user_exists(username_):
-    if Login.objects.all().filter(username=username_):
+def user_exists(email_):
+    if Login.objects.all().filter(email=email_):
         return True
     else:
         return False
@@ -128,14 +128,6 @@ class UserForm(ModelForm):
 
 class LoginForm(ModelForm):
 
-    username = forms.CharField(
-        required = True,
-        label = 'Username',
-        widget = forms.TextInput(
-            attrs={'placeholder' : 'Username'}
-        )
-    )
-
     email=forms.EmailField(
         required=True,
         label='Email', 
@@ -166,7 +158,6 @@ class LoginForm(ModelForm):
     class Meta:
         model = Login
         widgets = {'password':forms.PasswordInput(),'email':forms.HiddenInput()}
-        exclude = ('date_of_regn',)    
 
     def clean_repass(self):
         password = self.cleaned_data['password']

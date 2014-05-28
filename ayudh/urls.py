@@ -8,5 +8,7 @@ from ayudh import views
 urlpatterns = patterns('',
     (r'^$',views.home),
     (r'^register',include('register.urls')),
+    (r'^login/$',views.login),
+    (r'^logout/$',views.logout),
     (r'^about/$',views.about),
 )

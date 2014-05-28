@@ -1,0 +1,42 @@
+{% extends "static/base.html" %}
+
+{% block title %}User Login{% endblock %}
+{% block header_title %}
+<h2><i class="fa fa-sign-in"></i>
+    User Login</h2>
+{% endblock header_title %}
+{% block body %}
+<div class="jumbo-header">
+    <h1> AYUDH Portal Login </h1>
+</div><!--page-header-->
+
+<div class="container">
+    <form class="form-signin" role="form" method="POST">
+        <h3 class="form-signin-heading centered">Please sign in</h3>
+        {% csrf_token %}
+        <div class="centered">
+            <span class="fa-stack fa-4x">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-user fa-stack-1x" style="color:#eee;"></i>
+            </span>
+        </div><!--centered-->
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input name="email" type="text" class="form-control" id="email" value="" placeholder="Email Address"/>
+            </div><!--form-group-->
+        </div><!--form-group-->
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input name="pwd" type="password" class="form-control" id="password" value="" placeholder="Password" />
+            </div><!--form-group-->
+        </div><!--form-group-->
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ error_msg }}
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div><!--container-->
+{% endblock %}

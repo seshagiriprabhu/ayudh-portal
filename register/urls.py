@@ -7,7 +7,6 @@ from register import views
 urlpatterns = patterns('',
     (r'^/$',views.register),
     (r'^/user/$',views.registeruser),
-    (r'^/user/$', views.register),
     (r'^/user/success/$',views.userregistrationsuccess),
     (r'^/userregvisual/$', views.visualreg),
 )

@@ -28,7 +28,6 @@ class User(models.Model):
         return "/users/%s" % self.username
 
 class Login(models.Model):
-    username = models.CharField(max_length=100, blank=False, unique=True)
     email = models.EmailField(unique=True, blank=False, primary_key=True)
     password = models.CharField(max_length=100, blank=False)
 

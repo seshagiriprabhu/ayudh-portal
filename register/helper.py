@@ -39,13 +39,13 @@ def notify_new_user(username):
                                      ADMINS_EMAIL,
                                     fail_silently = False)
 
-def sendmail_after_userreg(username,password,email_to):
+def sendmail_after_userreg(email,password):
     email_subject = 'AYUDH \'14 User Registration'
     email_from = 'AYUDH 2014'
     email_message = """
-    You have been successfully registered as a USER for InCTF 2014.
+    You have been successfully registered as a USER for AYUDH Amritapuri.
     
-    Username: """ + username + """
+    Email   : """ + email + """
     Password: """ + password + """
     
     We look forward to your participation in AYUDH '14. Feel free to ask us any queries
@@ -55,7 +55,7 @@ def sendmail_after_userreg(username,password,email_to):
     AYUDH Team
     """    
 
-    django_send_mail(email_subject, email_message,email_from,[email_to], fail_silently=False)
+    django_send_mail(email_subject, email_message,email_from,[email], fail_silently=False)
     """
     The code below simply writes the email id to a file.
     This is for ease to add to the google group.
