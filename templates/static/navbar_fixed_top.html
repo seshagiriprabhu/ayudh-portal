@@ -39,14 +39,23 @@
                 </li>
                 {% ifequal request.session.loggedinside True %}
                 <li class="dropdown">
-                <a href="/event" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-trophy"></i> Events<b class="caret"></b></a>
+                    <a href="/event" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-trophy"></i> Events<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/event/create"><i class="fa fa-plus-circle"></i> Create Event</a></li>
+                        <li><a href="/event/delete"><i class="fa fa-minus-circle"></i> Remove Event</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/event/list"><i class="fa fa-list-alt"></i> List Events</a></li>
+                    </ul>
                 </li>
-                <ul class="dropdown-menu">
-                    <li><a href="/event/create"><i class="fa fa-plus-circle"></i> Create Event</a></li>
-                    <li><a href="/event/delete"><i class="fa fa-minus-circle"></i> Remove Event</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/event/list"><i class="fa fa-list-alt"></i> List Events</a></li>
-                </ul>
+                <li class="dropdown">
+                    <a href="/task" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags"></i> Tasks<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/task/create"><i class="fa fa-plus-circle"></i> Create Task</a></li>
+                        <li><a href="/task/delete"><i class="fa fa-minus-circle"></i> Remove Task</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/task/list"><i class="fa fa-list-alt"></i> List Tasks</a></li>
+                    </ul>
+                </li>
                 <li class="{% ifequal request.path '/logout' %}active{% endifequal %}"><a href="/logout">
                     <i class="fa fa-power-off fa-sign-out"></i> Logout</a>
                 </li>
